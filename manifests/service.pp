@@ -7,11 +7,19 @@ class varnish::service {
   include varnish
   include varnish::params
 
-  service { $varnish::params::service_name:
-    ensure     => running,
-    enable     => true,
-    hasstatus  => true,
-    hasrestart => true,
+  if $varnish::params::service_enable {
+    service { $varnish::params::service_name:
+      ensure     => running,
+      enable     => true,
+      hasstatus  => true,
+      hasrestart => true,
+    }
+  } else {
+    service { $varnish::params::service_name:
+      enable     => false,
+      hasstatus  => true,
+      hasrestart => true,
+    }
   }
   
   # This exec resource receives notifications from varnish::vcl resources
@@ -19,5 +27,4 @@ class varnish::service {
     command     => $varnish::vcl_reload,
     refreshonly => true,
   }
-
 }

@@ -37,7 +37,8 @@
 #   Ensure specific package version for Varnish, eg 3.0.5-1.el6
 # [*runtime_params*]
 #   Hash of runtime parameters
-#
+# [*service_enable*]
+#   Whether to enable the service at boot time - defaults to true
 class varnish (
   $addrepo         = $varnish::params::addrepo,
   $secret          = undef,
@@ -56,6 +57,7 @@ class varnish (
   $varnish_version = $varnish::params::varnish_version,
   $vcl_reload      = $varnish::params::vcl_reload,
   $package_ensure  = $varnish::params::package_ensure,
+  $service_enable  = $varnish::params::service_enable,
   $runtime_params  = {}
 ) inherits varnish::params {
 
